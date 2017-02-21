@@ -1,0 +1,15 @@
+<div class="inner">
+  <div class="heading row">
+      <div class="level"><h4>{{t 'app.level'}}</h4></div>
+      <div class="message"><h4>{{t 'app.message'}}</h4></div>
+  </div>
+  <div class="logs">
+    {{#unless logsToRender}}{{t 'app.nologstoshow'}}{{/unless}}
+    {{#each logsToRender}}
+      <div class="log row {{attributes.level}}">
+          <div class="level">{{attributes.level}}</div>
+          <div class="message">{{attributes.message}}</div>
+      </div>
+    {{/each}}
+  </div>
+</div>
