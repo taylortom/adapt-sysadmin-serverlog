@@ -1,63 +1,61 @@
-@import '../../../less/variables.less';
+@import 'colours';
 
-body.module-serverLog {
-  /**
-  * Main window
-  */
-  .serverLog {
-    overflow-y: scroll;
-    color: white;
-    font-family: monospace;
-    font-size: 110%;
-    .inner {
-      margin: 20px;
-      padding: 20px;
-      background-color: rgba(0,0,0,0.8);
+/**
+* Main window
+*/
+.contentPane .serverLog {
+  overflow-y: scroll;
+  color: white;
+  font-family: monospace;
+  font-size: 110%;
+  .inner {
+    margin: 20px;
+    padding: 20px;
+    background-color: rgba(0,0,0,0.8);
+  }
+  .row {
+    display: block;
+    margin-bottom: 10px;
+    div {
+      display: inline-block;
+      vertical-align: middle;
     }
-    .row {
-      display: block;
-      margin-bottom: 10px;
-      div {
-        display: inline-block;
-        vertical-align: middle;
-      }
-      &.heading {
-        border-bottom: 3px dashed rgb(255, 255, 255);
-        padding-bottom: 10px;
-        margin-bottom: 15px;
-      }
-      .level     { width: 8%; }
-      .message   { width: 90%; word-break: break-all; }
-      // log types
-      &.error  { color: red; }
-      &.warn  { color: yellow; }
-      &.info,
-      &.debug {
-        color: #a7bdc1;
-      }
+    &.heading {
+      border-bottom: 3px dashed rgb(255, 255, 255);
+      padding-bottom: 10px;
+      margin-bottom: 15px;
     }
-
-    .error {
-      position: inherit;
-      font-size: inherit;
+    .level     { width: 8%; }
+    .message   { width: 90%; word-break: break-all; }
+    // log types
+    &.error  { color: red; }
+    &.warn  { color: yellow; }
+    &.info,
+    &.debug {
+      color: #a7bdc1;
     }
   }
-  /**
-  * Sidebar
-  */
-  .sidebar {
-    button.showAll {
-      text-align: center;
-      font-size: 95%;
-      color: @primary-color;
-      padding-top: 0;
-      padding-bottom: 5px;
-      i {
-        margin-right: 3px;
-      }
-      &:hover {
-        color: @white;
-      }
+
+  .error {
+    position: inherit;
+    font-size: inherit;
+  }
+}
+/**
+* Sidebar
+*/
+.sidebar {
+  button.showAll {
+    text-align: center;
+    font-size: 95%;
+    color: @primary-color;
+    padding-top: 0;
+    padding-bottom: 5px;
+    i {
+      margin-right: 3px;
+    }
+    &:hover {
+      color: @white;
     }
   }
 }

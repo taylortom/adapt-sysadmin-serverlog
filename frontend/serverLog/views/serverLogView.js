@@ -2,8 +2,8 @@
 define(function(require){
   var _ = require('underscore');
   var Backbone = require('backbone');
-  var Origin = require('coreJS/app/origin');
-  var OriginView = require('coreJS/app/views/originView');
+  var Origin = require('core/origin');
+  var OriginView = require('core/views/originView');
 
   var ServerLogView = OriginView.extend({
     tagName: 'div',
@@ -14,9 +14,11 @@ define(function(require){
 
       this.filterReset();
 
-      this.listenTo(Origin, 'serverLog:filter:on', this.filterOn);
-      this.listenTo(Origin, 'serverLog:filter:off', this.filterOff);
-      this.listenTo(Origin, 'serverLog:filter:reset', this.filterReset);
+      this.listenTo(Origin, {
+        'serverLog:filter:on': this.filterOn,
+        'serverLog:filter:off': this.filterOff,
+        'serverLog:filter:reset': this.filterReset
+      });
     },
 
     postRender: function() {

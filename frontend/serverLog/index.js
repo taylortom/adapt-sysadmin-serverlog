@@ -1,38 +1,34 @@
 // LICENCE https://github.com/adaptlearning/adapt_authoring/blob/master/LICENSE
 define(function(require) {
   var Backbone = require('backbone');
-  var Origin = require('coreJS/app/origin');
+  var Origin = require('core/origin');
   var LogCollection = require('./collections/logCollection.js');
   var ServerLogView = require('./views/serverLogView.js');
   var ServerLogSidebarView = require('./views/serverLogSidebarView.js');
 
-  // Origin.on('globalMenu:serverLog:open', function() {
-  //   Origin.router.navigate('#/serverLog', {trigger: true});
-  // });
-  //
-  // Origin.on('app:dataReady login:changed', function() {
-  //   var permissions = ["*/*:create","*/*:read","*/*:update","*/*:delete"];
-  //   Origin.permissions.addRoute('serverLog', permissions);
-  //   if (Origin.permissions.hasPermissions(permissions)) {
-  //     Origin.globalMenu.addItem({
-  //       "location": "global",
-  //       "text": "Server Log",
-  //       "icon": "fa-server",
-  //       "callbackEvent": "serverLog:open"
-  //     });
-  //   }
-  // });
+  var CLASSNAME = 'serverLog';
+  var FEATURE_PERMISSIONS = ["*/*:create","*/*:read","*/*:update","*/*:delete"];
 
-  Origin.on('router:serverLog', function(location, subLocation, action) {
-    Origin.trigger('location:title:update', {
-      title: window.polyglot.t('app.serverlog')
-    });
-    Origin.sidebar.addView(new ServerLogSidebarView().$el);
+  Origin.on('origin:dataReady login:changed', function() {
+    Origin.permissions.addRoute(CLASSNAME, FEATURE_PERMISSIONS);
+  });
+
+  Origin.on('systemInfoSidebar:postRender', function(view) {
+    if (Origin.permissions.hasPermissions(FEATURE_PERMISSIONS)) {
+      Origin.trigger('systemInfoSidebar:addButton', {
+        name: CLASSNAME,
+        title: Origin.l10n.t('app.serverlog'),
+        event: CLASSNAME + ":open"
+      });
+    }
+  });
+
+  Origin.on(CLASSNAME + ':open', function() {
+    // bypass the router, as we're not treating these as different pages
+    Origin.trigger('location:title:update', { title: Origin.l10n.t('app.serverlog') });
     (new LogCollection()).fetch({
       success: function(logs) {
-        Origin.router.createView(ServerLogView, {
-          model: new Backbone.Model({ logs: logs })
-        });
+        Origin.contentPane.setView(ServerLogView, { model: new Backbone.Model({ logs: logs }) });
       }
     });
   });
