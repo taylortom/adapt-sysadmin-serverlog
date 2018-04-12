@@ -1,4 +1,4 @@
-# adapt-serverLog
+# adapt-sysadmin-serverlog
 
 This is an Adapt **authoring tool plugin** which displays the server log messages.
 
