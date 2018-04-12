@@ -2,7 +2,7 @@
 
 This is an Adapt **authoring tool plugin** which displays the server log messages.
 
-The feature is accessed from the [System info](https://github.com/taylortom/adapt-systemInfo) sidebar.
+The feature is accessed from the [sysadmin](https://github.com/taylortom/adapt-sysadmin) page.
 
 Features:
 - Log messages can be filtered by type
@@ -16,4 +16,5 @@ Features:
 
 ## Dependencies
 
-- [adapt-systemInfo](https://github.com/taylortom/adapt-systemInfo)
+- [adapt-sysadmin](https://github.com/taylortom/adapt-sysadmin)
+- [winston-mongodb](https://github.com/winstonjs/winston-mongodb) NPM module
