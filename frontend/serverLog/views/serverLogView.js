@@ -3,64 +3,48 @@ define(function(require){
   var _ = require('underscore');
   var Backbone = require('backbone');
   var Origin = require('core/origin');
-  var OriginView = require('core/views/originView');
+  var LogCollection = require('../collections/logCollection');
+  var SysadminView = require('plugins/sysadmin/views/sysadminPluginView');
 
-  var ServerLogView = OriginView.extend({
-    tagName: 'div',
-    className: 'serverLog',
+  var ServerLogView = SysadminView.extend({
+    name: 'serverLog',
+    settings: {
+      autoRender: false
+    },
+    events: {
+      'click button': 'updateFilters'
+    },
 
     preRender: function() {
-      this.listenTo(this.model, 'change:appliedFilters', this.filter);
-
-      this.filterReset();
-
-      this.listenTo(Origin, {
-        'serverLog:filter:on': this.filterOn,
-        'serverLog:filter:off': this.filterOff,
-        'serverLog:filter:reset': this.filterReset
+      (new LogCollection()).fetch({
+        success: _.bind(function(logs) {
+          this.model = new Backbone.Model({
+            logs: logs,
+            appliedFilters: ['info','warn','error']
+          });
+          this.render();
+        }, this)
       });
     },
 
     postRender: function() {
       // go back to the top
-      this.$el.scrollTop(0);
-
-      this.setHeight();
+      // this.$el.scrollTop(0);
       this.setViewToReady();
     },
 
-    setHeight: function() {
-      var newHeight = $(window).height()-$('.' + this.className).offset().top;
-      $('.' + this.className).height(newHeight);
-    },
+    updateFilters: function(event) {
+      var $btn = $(event.currentTarget);
+      var filterType = $btn.attr('data-type');
+      var shouldEnable = !$('i', $btn).hasClass('fa-toggle-on');
+      var newFilters = this.model.get('appliedFilters').slice(0);
 
-    filterReset: function() {
-      this.model.set('appliedFilters', ['info','warn','error']);
-      this.model.set('logsToRender', this.model.get('logs').models);
-    },
-
-    filterOn: function(filterType) {
-      if(!_.contains(this.model.get('appliedFilters'), filterType)) {
-        var temp = this.model.get('appliedFilters').slice(0);
-        temp.push(filterType);
-        this.model.set('appliedFilters', temp);
+      if(!shouldEnable) {
+        newFilters.splice(newFilters.indexOf(filterType),1);
+      } else if(!_.contains(newFilters, filterType)) {
+        newFilters.push(filterType);
       }
-    },
-
-    filterOff: function(filterType) {
-      var filters = this.model.get('appliedFilters').slice(0);
-      filters.splice(filters.indexOf(filterType),1);
-      this.model.set('appliedFilters', filters);
-    },
-
-    filter: function() {
-      var filters = this.model.get('appliedFilters');
-      var sorted = this.model.get('logs').filter(function(item) {
-        return _.contains(filters, item.get('level'));
-      });
-
-      this.model.set('logsToRender', sorted);
-
+      this.model.set('appliedFilters', newFilters);
       this.render();
     }
   }, {

@@ -4,14 +4,28 @@
 * Main window
 */
 .contentPane .serverLog {
-  overflow-y: scroll;
-  color: white;
-  font-family: monospace;
-  font-size: 110%;
-  .inner {
-    margin: 20px;
+  .filters {
+    .filter {
+      display: inline-block;
+
+      button {
+        font-size: 15px;
+
+        i {
+          color: @secondary-color;
+          margin-right: 3px;
+        }
+      }
+    }
+  }
+  .terminal {
+    color: white;
+    font-family: monospace;
+    font-size: 110%;
     padding: 20px;
     background-color: rgba(0,0,0,0.8);
+    max-height: 70vh;
+    overflow-y: scroll;
   }
   .row {
     display: block;
@@ -28,8 +42,8 @@
     .level     { width: 8%; }
     .message   { width: 90%; word-break: break-all; }
     // log types
-    &.error  { color: red; }
-    &.warn  { color: yellow; }
+    &.error  { color: @alert-color; }
+    &.warn  { color: @warning-color; }
     &.info,
     &.debug {
       color: #a7bdc1;
@@ -39,23 +53,5 @@
   .error {
     position: inherit;
     font-size: inherit;
-  }
-}
-/**
-* Sidebar
-*/
-.sidebar {
-  button.showAll {
-    text-align: center;
-    font-size: 95%;
-    color: @primary-color;
-    padding-top: 0;
-    padding-bottom: 5px;
-    i {
-      margin-right: 3px;
-    }
-    &:hover {
-      color: @white;
-    }
   }
 }
