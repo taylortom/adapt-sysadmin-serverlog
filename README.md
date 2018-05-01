@@ -16,5 +16,7 @@ Features:
 
 ## Dependencies
 
+I recommend looking at the winston-mongodb README for information about compatibility, but I’ve had success with v2 of winston and v3.0.2 of winston-mongodb.
+
 - [adapt-sysadmin](https://github.com/taylortom/adapt-sysadmin)
 - [winston-mongodb](https://github.com/winstonjs/winston-mongodb) NPM module
