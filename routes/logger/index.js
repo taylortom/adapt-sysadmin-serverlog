@@ -32,10 +32,10 @@ function loadSchema(cb) {
 }
 
 function addTransport(cb) {
-  origin.logger.add(winstonMongo, {
+  origin.logger.add(new winston.transports.MongoDB({
     db: getDb(),
     collection: COLLECTION_NAME
-  });
+  }));
   cb();
 }
 
