@@ -12,7 +12,6 @@ Features:
 
 1. Copy all sub-folders in `/routes/` to `/routes/` in your authoring tool folder.
 2. Copy all sub-folders in `/frontend/` to `/frontend/src/plugins/` in your authoring tool folder.
-3. Copy contents of `/schema/` to `lib/dml/schema/system/`
 
 ## Dependencies
 
