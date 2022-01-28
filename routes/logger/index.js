@@ -5,7 +5,8 @@ var _ = require('underscore');
 var async = require('async');
 var fs = require('fs');
 var path = require('path');
-var winstonMongo = require('winston-mongodb').MongoDB;
+var winston = require('winston');
+var winstonMongo = require('winston-mongodb');
 
 var origin = require('../../lib/application')();
 var server = require('express')();
